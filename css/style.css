@@ -1,0 +1,10 @@
+h1, h3 {
+    text-align:center;
+    color: #770000; 
+    text-shadow: 4px 2px 8px gray; 
+}
+body { background-color: #b0d090;}
+#content{
+margin:0 auto;
+width:640px;
+}
