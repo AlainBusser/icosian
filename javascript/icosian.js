@@ -1,3 +1,63 @@
+/* bibliothèque de graphes
+Un graphe est un objet contenant deux tableaux:
+nodes, dont chaque élément est un Phaser.Point 
+edges, dont chaque élément est lui-même un tableau, 
+contenant les numéros des sommets auxquels est relié un sommet donné
+
+Phaser c'est le moteur de jeu
+game c'est le jeu (la mer)
+gemmes est la liste des objets se trouvant sur chaque sommet du graphe
+(initialement des rubis, ensuite des plantes carnivores)
+chemin est le nom du graphe sur lequel on joue
+
+Utilitaires sous licence MIT
+Alain Busser 2016
+*/
+
+/* global Phaser, game, gemmes, chemin */
+
+function addNode(graphe,x,y){                   // ajouter un sommet
+    graphe.nodes.push(new Phaser.Point(x,y));
+}
+function addEdge(graphe,a,b){                   // ajouter une arête
+    graphe.edges[a].push[b];
+}
+function dessineGraphe(g){                      // dessiner le graphe dans le jeu
+    var graphique = game.add.graphics(0,0);     // dessin vectoriel
+    graphique.z = 2;                            // en-dessous de la tortue
+    graphique.lineStyle(16,0x8F6D45);           // couleur sable
+    graphique.beginFill(0x8F6D45); 
+    for(var dep in g.edges){                    // on dessine d'abord les arêtes
+        for(var na in g.edges[dep])  {          // numéros des arêtes
+            var arr = g.edges[dep][na];         // les arêtes elles-mêmes
+            graphique.moveTo(g.nodes[dep].x,g.nodes[dep].y);
+            graphique.lineTo(g.nodes[arr].x,g.nodes[arr].y);
+        }
+    }
+    for(var s in g.nodes){                      // ensuite on dessine les sommets, de rayon 24 pixels
+        graphique.drawCircle(g.nodes[s].x,g.nodes[s].y,24);
+        if(s>0){                                // pas de rubis au départ
+            gemmes[s] = game.add.sprite(g.nodes[s].x,g.nodes[s].y,"rubis");
+            gemmes[s].anchor.setTo(0.5);
+            gemmes[s].scale.setTo(0.25);
+        }
+    }
+    graphique.endFill();
+}
+
+
+function contient(tableau,element){             // Le "element in tableau" de JavaScript ne fonctionne pas bien
+    var rep = false;                            // a priori l'element n'est pas dans le tableau
+    for (var e in tableau){
+        if (tableau[e] == element) {rep=true}   // a postériori peut-être que si
+    }
+    return rep;
+}
+
+
+function liaison(a,b){                          // dit s'il y a une arête entre a et b (numéros des sommets)
+    return (contient(chemin.edges[a],b) || contient(chemin.edges[b],a));
+}
 /* global Phaser */
 var game = new Phaser.Game(480,480,Phaser.AUTO,'content',{preload: preload, create: create,update:update});
 var chemin = [ ];                                       // le graphe
@@ -6,12 +66,6 @@ var gemmes = [ ];                                       // les rubis
 var lieu = 0;
 
 
-function addNode(graphe,x,y){                   // ajouter un sommet
-    graphe.nodes.push(new Phaser.Point(x,y));
-}
-function addEdge(graphe,a,b){                   // ajouter une arête
-    graphe.edges[a].push[b];
-}
 var abcs = [240,30,450,130,350,240,94,386,168,312,177,303,142,338,240,205,275,183,297,240];
 var ords = [30,200,200,440,440,100,220,220,382,382,165,165,294,294,368,205,205,270,270,316];
 for (var n in abcs) { addNode(chemin,abcs[n],ords[n]) }
@@ -38,28 +92,6 @@ function manger(){
     gemmes[lieu].anchor.setTo(0.5);
     gemmes[lieu].scale.setTo(0.3);
 }
-function dessineGraphe(g){
-    var graphique = game.add.graphics(0,0);
-    graphique.z = 2;
-    graphique.lineStyle(16,0x8F6D45);
-    graphique.beginFill(0x8F6D45);
-    for(var dep in g.edges){
-        for(var na in g.edges[dep])  {
-            var arr = g.edges[dep][na];
-            graphique.moveTo(g.nodes[dep].x,g.nodes[dep].y);
-            graphique.lineTo(g.nodes[arr].x,g.nodes[arr].y);
-        }
-    }
-    for(var s in g.nodes){
-        graphique.drawCircle(g.nodes[s].x,g.nodes[s].y,24);
-        if(s>0){
-            gemmes[s] = game.add.sprite(g.nodes[s].x,g.nodes[s].y,"rubis");
-            gemmes[s].anchor.setTo(0.5);
-            gemmes[s].scale.setTo(0.25);
-        }
-    }
-    graphique.endFill();
-}
 function promenade(P1,P2){ // parcours d'une arête du graphe (d'un point P1 à un autre P2)
     turtle.x = P1.x;
     turtle.y = P1.y;
@@ -78,16 +110,6 @@ function prochain(x,y){
         }
     }
     return numero;
-}
-function contient(tableau,element){
-    var rep = false;
-    for (var e in tableau){
-        if (tableau[e] == element) {rep=true}
-    }
-    return rep;
-}
-function liaison(a,b){
-    return (contient(chemin.edges[a],b) || contient(chemin.edges[b],a));
 }
 var turtle;
 function preload(){   
