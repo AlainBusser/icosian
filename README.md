@@ -13,3 +13,7 @@ endroit où elle a déjà enlevé un rubis.
 
 
 Exemple d'une partie perdante:
+
+![hamiltonien](https://raw.githubusercontent.com/AlainBusser/icosian/master/icosienMD.png)
+
+en effet la tortue est revenue au départ en n'ayant récolté que 7 rubis
