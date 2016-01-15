@@ -1,4 +1,15 @@
 # icosian
-icosian game with a tortoise
+Le jeu icosien d'Hamilton en Phaser
 
-the labyrinth is made of sand, the tortoise must not come back to an already visited place
+La tortue démarre en haut de l'écran, elle ne doit pas essayer de passer par 
+l'eau (elle ne sait pas nager), et elle est chargéeau
+
+** de ramasser les rubis, sans jamais repasser par un chemin déjà emprunté
+** de revenir au point de départ
+
+Chaque fois que la tortue ramasse un rubis, cela déclenche l'éclosion d'une 
+plante carnivore (mangeuse de tortues) donc elle ne peut pas revisiter un 
+endroit où elle a déjà enlevé un rubis.
+
+
+Exemple d'une partie perdante:
