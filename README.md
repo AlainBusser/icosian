@@ -12,6 +12,9 @@ plante carnivore (mangeuse de tortues) donc elle ne peut pas revisiter un
 endroit où elle a déjà enlevé un rubis.
 
 
+Pour ramasser un rubis, cliquer dessus.
+
+
 Exemple d'une partie perdante:
 
 ![hamiltonien](https://raw.githubusercontent.com/AlainBusser/icosian/master/icosienMD.png)
